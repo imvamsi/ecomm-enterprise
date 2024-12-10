@@ -1,5 +1,5 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 import { FaShoppingBasket, FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png";
 function Header(): JSX.Element {
@@ -7,25 +7,25 @@ function Header(): JSX.Element {
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
+          <Nav.Link as={Link} to="/">
             <Navbar.Brand>
               <img src={logo} />
               Ecom Enterprise
             </Navbar.Brand>
-          </LinkContainer>
+          </Nav.Link>
           <Navbar.Toggle aria-controls="basic-nav"></Navbar.Toggle>
           <Navbar.Collapse id="basic-nav">
             <Nav className="ms-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link className="text-white">
-                  <FaShoppingBasket /> Cart
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="sign-in">
-                <Nav.Link className="text-white">
-                  <FaUser /> Sign In
-                </Nav.Link>
-              </LinkContainer>
+              {/* <LinkContainer to="/cart"> */}
+              <Nav.Link className="text-white" as={Link} to="/cart">
+                <FaShoppingBasket /> Cart
+              </Nav.Link>
+              {/* </LinkContainer> */}
+              {/* <LinkContainer to="sign-in"> */}
+              <Nav.Link className="text-white" as={Link} to="/sign-in">
+                <FaUser /> Sign In
+              </Nav.Link>
+              {/* </LinkContainer> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
