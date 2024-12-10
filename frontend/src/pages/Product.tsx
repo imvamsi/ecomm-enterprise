@@ -18,6 +18,8 @@ function Product(): JSX.Element {
   const product = products.find((p) => p._id === productId);
   console.log("🚀 ~ Product ~ product:", product);
 
+  const stockCount = product?.countInStock ?? 0;
+
   return (
     <>
       <Link to="/" className="btn btn-primary my-3">
@@ -44,7 +46,7 @@ function Product(): JSX.Element {
             <p>{product?.description}</p>
           </ListGroupItem>
           <ListGroupItem>
-            {(product?.countInStock ?? 0) > 0 ? (
+            {stockCount > 0 ? (
               <Badge pill bg="success" className="my-5">
                 In Stock
               </Badge>
@@ -53,6 +55,11 @@ function Product(): JSX.Element {
                 Out of Stock
               </Badge>
             )}
+            {stockCount > 0 && stockCount < 5 ? (
+              <Badge pill bg="warning" className="my-5">
+                Running Low
+              </Badge>
+            ) : null}
           </ListGroupItem>
         </Col>
       </Row>
