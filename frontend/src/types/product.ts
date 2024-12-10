@@ -10,3 +10,8 @@ export interface Product {
   rating: number;
   numReviews: number;
 }
+
+export interface Rating {
+  value: number;
+  text: string;
+}
