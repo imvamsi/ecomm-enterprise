@@ -1,15 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import {
-  Row,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Button,
-  Card,
-  Image,
-  Pill,
-  Badge,
-} from "react-bootstrap";
+import { Row, Col, ListGroupItem, Button, Image, Badge } from "react-bootstrap";
 import ProductRating from "../components/ProductRating";
 import products from "../products";
 
