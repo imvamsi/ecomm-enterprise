@@ -56,10 +56,21 @@ function Product(): JSX.Element {
               </Badge>
             )}
             {stockCount > 0 && stockCount < 5 ? (
-              <Badge pill bg="warning" className="my-5">
+              <Badge pill bg="warning" className="mx-3">
                 Running Low
               </Badge>
             ) : null}
+          </ListGroupItem>
+          <ListGroupItem>
+            <Button
+              className="w-100 mt-auto"
+              size="lg"
+              variant="outline-success"
+              type="button"
+              disabled={stockCount < 1}
+            >
+              Add to Cart
+            </Button>
           </ListGroupItem>
         </Col>
       </Row>
