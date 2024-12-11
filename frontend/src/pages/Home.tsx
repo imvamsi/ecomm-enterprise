@@ -11,7 +11,7 @@ export default function Home(): JSX.Element {
   }, []);
 
   async function fetchProducts() {
-    const data = await axios.get("http://localhost:8000/api/products");
+    const { data } = await axios.get("http://localhost:8000/api/products");
     console.log(data);
   }
   return (
