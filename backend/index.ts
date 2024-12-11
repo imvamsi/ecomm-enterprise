@@ -1,8 +1,11 @@
 import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
 import products from "./data/products.js";
 
+dotenv.config();
+
 const app: Express = express();
-const PORT = 8000;
+const PORT = process.env.SERVER_PORT;
 app.get("/", (req: Request, res: Response) => {
   res.send("helloworld aarya");
 });
