@@ -10,11 +10,11 @@ export default function Home(): JSX.Element {
     fetchProducts();
   }, []);
 
-  async function fetchProducts(): Promise<Product[]> {
+  async function fetchProducts(): Promise<void> {
     const { data } = await axios.get<Product[]>(
       "http://localhost:8000/api/products"
     );
-    console.log(data);
+
     setProducts(data);
   }
   return (
