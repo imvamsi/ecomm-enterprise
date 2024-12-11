@@ -1,18 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
-import products from "../products";
-import Product from "./Product";
+import { Product } from "../types/product";
 
 export default function Home(): JSX.Element {
+  const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  async function fetchProducts() {
-    const { data } = await axios.get("http://localhost:8000/api/products");
+  async function fetchProducts(): Promise<Product[]> {
+    const { data } = await axios.get<Product[]>(
+      "http://localhost:8000/api/products"
+    );
     console.log(data);
+    setProducts(data);
   }
   return (
     <>
