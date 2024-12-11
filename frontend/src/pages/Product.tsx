@@ -13,7 +13,7 @@ function Product(): JSX.Element {
   return (
     <>
       <Link to="/" className="btn btn-primary my-3">
-        Go Back
+        {`\u2190 Go Back`}
       </Link>
       <Row>
         <Col md={6}>
