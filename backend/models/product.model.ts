@@ -5,8 +5,8 @@ interface IReview extends Document {
   name: string;
   rating: number;
   comment: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface IProduct extends Document {
@@ -97,7 +97,9 @@ const productSchema = new Schema<IProduct>(
   }
 );
 
-const Review = mongoose.model<IReview>("Review", reviewSchema);
-const Product = mongoose.model<IProduct>("Product", productSchema);
+// const Review = mongoose.model<IReview>("Review", reviewSchema);
+// const Product = mongoose.model<IProduct>("Product", productSchema);
 
-export { Review, Product };
+// export { Review, Product };
+
+export default mongoose.model<IProduct>("Product", productSchema);
