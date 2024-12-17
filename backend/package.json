@@ -4,9 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "rimraf dist && npx tsc",
-    "start": "node dist/index.js",
-    "serve": "concurrently \"npx tsc -w\" \"nodemon dist/index.js\""
+    "start": "node backend/index.js",
+    "server": "nodemon backend/index.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "db:seed": "node seeder",
+    "db:destroy": "node seeder -d"
   },
   "keywords": [],
   "author": "",
@@ -16,12 +19,18 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "mongoose": "^8.8.4",
     "nodemon": "^3.1.7",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }
 }
