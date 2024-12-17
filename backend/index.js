@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import connectToDB from "./config/db.js";
-import productRoutes from "./routes/productRoutes.js";
+import productRoutes from "./routes/product.routes.js";
 
 dotenv.config();
 
@@ -18,6 +18,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`now running on port ${PORT}`);
