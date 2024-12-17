@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import products from "./data/products.js";
@@ -7,11 +7,11 @@ import connectToDB from "./config/db.js";
 dotenv.config();
 
 connectToDB();
-const app: Express = express();
+const app = express();
 
 app.use(cors());
 const PORT = process.env.SERVER_PORT;
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.send("helloworld aarya");
 });
 

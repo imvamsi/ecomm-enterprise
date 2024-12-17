@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connectToDB = async (): Promise<void> => {
+const connectToDB = async () => {
   try {
     const MONGO_URI = process.env.MONGO_URI;
     if (!MONGO_URI) throw new Error("MOngo uri is not defined");

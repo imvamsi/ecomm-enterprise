@@ -1,15 +1,15 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface IUSer extends mongoose.Document {
-  name: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// interface IUSer extends mongoose.Document {
+//   name: string;
+//   email: string;
+//   password: string;
+//   isAdmin: boolean;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
-const userSchema = new Schema<IUSer>(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -35,4 +35,4 @@ const userSchema = new Schema<IUSer>(
   }
 );
 
-export default mongoose.model<IUSer>("User", userSchema);
+export default mongoose.model("User", userSchema);

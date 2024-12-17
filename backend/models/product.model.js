@@ -1,30 +1,30 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface IReview extends Document {
-  user: mongoose.Types.ObjectId;
-  name: string;
-  rating: number;
-  comment: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// interface IReview extends Document {
+//   user: mongoose.Types.ObjectId;
+//   name: string;
+//   rating: number;
+//   comment: string;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
-interface IProduct extends Document {
-  user: mongoose.Types.ObjectId;
-  name: string;
-  image: string;
-  brand: string;
-  category: string;
-  description: string;
-  reviews: IReview[];
-  rating: number;
-  price: number;
-  countInStock: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+// interface IProduct extends Document {
+//   user: mongoose.Types.ObjectId;
+//   name: string;
+//   image: string;
+//   brand: string;
+//   category: string;
+//   description: string;
+//   reviews: IReview[];
+//   rating: number;
+//   price: number;
+//   countInStock: number;
+//   createdAt?: Date;
+//   updatedAt?: Date;
+// }
 
-const reviewSchema = new Schema<IReview>(
+const reviewSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -49,7 +49,7 @@ const reviewSchema = new Schema<IReview>(
   }
 );
 
-const productSchema = new Schema<IProduct>(
+const productSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -102,4 +102,4 @@ const productSchema = new Schema<IProduct>(
 
 // export { Review, Product };
 
-export default mongoose.model<IProduct>("Product", productSchema);
+export default mongoose.model("Product", productSchema);

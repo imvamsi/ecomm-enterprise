@@ -1,44 +1,44 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface IOrderItem {
-  name: string;
-  qty: number;
-  image: string;
-  price: number;
-  product: mongoose.Types.ObjectId;
-}
+// interface IOrderItem {
+//   name: string;
+//   qty: number;
+//   image: string;
+//   price: number;
+//   product: mongoose.Types.ObjectId;
+// }
 
-interface IPaymentResult {
-  id?: string;
-  status?: string;
-  update_time?: string;
-  email_address?: string;
-}
+// interface IPaymentResult {
+//   id?: string;
+//   status?: string;
+//   update_time?: string;
+//   email_address?: string;
+// }
 
-interface IShippingAddress {
-  address: string;
-  city: string;
-  postalCode: string | number;
-  country: string;
-}
+// interface IShippingAddress {
+//   address: string;
+//   city: string;
+//   postalCode: string | number;
+//   country: string;
+// }
 
-interface IOrder extends Document {
-  user: mongoose.Types.ObjectId;
-  orderItems: IOrderItem[];
-  shippingAddress: IShippingAddress;
-  paymentMethod: string;
-  paymentResult?: IPaymentResult;
-  itemsPrice: number;
-  taxPrice: number;
-  shippingPrice: number;
-  totalPrice: number;
-  isPaid: boolean;
-  paidAt?: Date;
-  isDelivered: boolean;
-  deliveredAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// interface IOrder extends Document {
+//   user: mongoose.Types.ObjectId;
+//   orderItems: IOrderItem[];
+//   shippingAddress: IShippingAddress;
+//   paymentMethod: string;
+//   paymentResult?: IPaymentResult;
+//   itemsPrice: number;
+//   taxPrice: number;
+//   shippingPrice: number;
+//   totalPrice: number;
+//   isPaid: boolean;
+//   paidAt?: Date;
+//   isDelivered: boolean;
+//   deliveredAt?: Date;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
 const orderSchema = new Schema(
   {
@@ -149,4 +149,4 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IOrder>("Order", orderSchema);
+export default mongoose.model("Order", orderSchema);
