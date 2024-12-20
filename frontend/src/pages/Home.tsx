@@ -1,32 +1,41 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
-import { Product } from "../types/product";
+import { IProduct } from "../entities/product";
+import { useGetProductsQuery } from "../slices/productSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 export default function Home(): JSX.Element {
-  const [products, setProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { data: products, error, isLoading } = useGetProductsQuery();
+  console.log("🚀 ~ Home ~ data:", products);
 
-  async function fetchProducts(): Promise<void> {
-    const { data } = await axios.get<Product[]>(
-      "http://localhost:8000/api/products"
-    );
-
-    setProducts(data);
-  }
   return (
     <>
-      <h1>LatestProducts</h1>
-      <Row>
-        {products.map((product) => (
-          <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-            <ProductCard product={product} />
-          </Col>
-        ))}
-      </Row>
+      {/* {error ? <p>{error?.status}</p> : null} */}
+      {error && (
+        <p>
+          <Message variant="danger">
+            {(error as { error: string }).error || "An unknown error occurred"}
+          </Message>
+        </p>
+      )}
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        !error && (
+          <>
+            <h1>Latest Products</h1>
+            <Row>
+              {products?.map((product: IProduct) => (
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <ProductCard product={product} />
+                </Col>
+              ))}
+            </Row>
+          </>
+        )
+      )}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { FaStar, FaStarHalf, FaRegStar } from "react-icons/fa";
-import { Rating } from "../types/product";
+import { IRating } from "../entities/product";
 
-function ProductRating({ value, text }: Rating): JSX.Element {
+function ProductRating({ value, text }: IRating): JSX.Element {
   return (
     <div className="rating">
       <span>

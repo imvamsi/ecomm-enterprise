@@ -1,4 +1,4 @@
-export interface Product {
+export interface IProduct {
   _id: string;
   name: string;
   image: string;
@@ -11,7 +11,7 @@ export interface Product {
   numReviews: number;
 }
 
-export interface Rating {
+export interface IRating {
   value: number;
   text: string;
 }

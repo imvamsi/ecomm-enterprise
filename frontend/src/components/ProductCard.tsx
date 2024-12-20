@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import { Product } from "../types/product";
+import { IProduct } from "../entities/product";
 import ProductRating from "./ProductRating";
 
 interface ProductType {
-  product: Product;
+  product: IProduct;
 }
 
 export default function ProductCard({ product }: ProductType): JSX.Element {
