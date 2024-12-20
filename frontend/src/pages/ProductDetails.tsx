@@ -1,8 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { Row, Col, ListGroupItem, Button, Image, Badge } from "react-bootstrap";
 import ProductRating from "../components/ProductRating";
-import { Product } from "../entities/product";
 import { useGetProductDetailsQuery } from "../slices/productSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 function ProductDetails() {
   const { id: productId } = useParams();
@@ -17,8 +18,15 @@ function ProductDetails() {
 
   return (
     <>
-      {isLoading ? (
-        <p>Loading product info</p>
+      {error && (
+        <p>
+          <Message>
+            {(error as { error: string }).error || "An unknown error occurred"}
+          </Message>
+        </p>
+      )}
+      {isLoading && !error ? (
+        <Loader />
       ) : (
         <>
           <Link to="/" className="btn btn-primary my-3">
@@ -27,23 +35,23 @@ function ProductDetails() {
 
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} />
+              <Image src={product?.image} alt={product?.name} />
             </Col>
             <Col md={6}>
               <ListGroupItem>
-                <h3 className="text-black">{product.name}</h3>
+                <h3 className="text-black">{product?.name}</h3>
               </ListGroupItem>
               <ListGroupItem>
                 <ProductRating
-                  value={product.rating ?? 0}
-                  text={`${product.numReviews} Reviews`}
+                  value={product?.rating ?? 0}
+                  text={`${product?.numReviews} Reviews`}
                 />
               </ListGroupItem>
               <ListGroupItem className="my-2 text-bold" as={"h4"}>
-                $<span>{product.price}</span>
+                $<span>{product?.price}</span>
               </ListGroupItem>
               <ListGroupItem className="my-3">
-                <p>{product.description}</p>
+                <p>{product?.description}</p>
               </ListGroupItem>
               <ListGroupItem>
                 {stockCount > 0 ? (
