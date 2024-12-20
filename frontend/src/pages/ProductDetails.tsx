@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { Row, Col, ListGroupItem, Button, Image, Badge } from "react-bootstrap";
 import ProductRating from "../components/ProductRating";
-import { Product } from "../types/product";
+import { Product } from "../entities/product";
 
 function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);

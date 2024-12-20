@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
-import { Product } from "../types/product";
+import { Product } from "../entities/product";
 
 export default function Home(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
