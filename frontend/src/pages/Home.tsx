@@ -7,11 +7,9 @@ import Message from "../components/Message";
 
 export default function Home(): JSX.Element {
   const { data: products, error, isLoading } = useGetProductsQuery();
-  console.log("🚀 ~ Home ~ data:", products);
 
   return (
     <>
-      {/* {error ? <p>{error?.status}</p> : null} */}
       {error && (
         <p>
           <Message variant="danger">
