@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IProduct } from "../entities/product";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") as string)
@@ -9,19 +10,33 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
+      // const item = action.payload;
+
+      // const existingItem = state.cartItems.find(
+      //   (cartItem) => cartItem._id === item._id
+      // );
+
+      // if (existingItem) {
+      //   state.cartItems = state.cartItems.map((cartItem) =>
+      //     cartItem._id === existingItem._id ? item : cartItem
+      //   );
+      // } else {
+      //   state.cartItems = [...state.cartItem, item];
+      // }
+
       const item = action.payload;
 
-      const existingItem = state.cartItems.find(
-        (cartItem) => cartItem._id === item._id
+      if (!item) {
+        console.error("there is no item in the payload");
+        return;
+      }
+      const existingItemIndex = state.cartItems.findIndex(
+        (cartItem: IProduct) => cartItem._id === item._id
       );
 
-      if (existingItem) {
-        state.cartItems = state.cartItems.map((cartItem) =>
-          cartItem._id === existingItem._id ? item : cartItem
-        );
-      } else {
-        state.cartItems = [...state.cartItem, item];
-      }
+      if (existingItemIndex === -1)
+        state.cartItems = [...state.cartItems, item];
+      else state.cartItems[existingItemIndex] = item;
     },
   },
 });
