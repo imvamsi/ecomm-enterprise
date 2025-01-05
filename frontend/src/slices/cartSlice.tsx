@@ -7,7 +7,23 @@ const initialState = localStorage.getItem("cart")
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    addToCart: (state, action) => {
+      const item = action.payload;
+
+      const existingItem = state.cartItems.find(
+        (cartItem) => cartItem._id === item._id
+      );
+
+      if (existingItem) {
+        state.cartItems = state.cartItems.map((cartItem) =>
+          cartItem._id === existingItem._id ? item : cartItem
+        );
+      } else {
+        state.cartItems = [...state.cartItem, item];
+      }
+    },
+  },
 });
 
 export default cartSlice.reducer;
