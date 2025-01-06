@@ -9,7 +9,7 @@ const addDecimals = (num: number): string => {
  *edit types once items in the cart are clear
  */
 
-const UpdateCart = (state) => {
+export const UpdateCart = (state) => {
   const itemsPrice = state.cartItems.reduce(
     (total: number, item: number): number =>
       (item.price * 100 * item.qty) / 100,
@@ -29,3 +29,5 @@ const UpdateCart = (state) => {
   localStorage.setItem("cart", JSON.stringify(state));
   return state;
 };
+
+//export { UpdateCart };

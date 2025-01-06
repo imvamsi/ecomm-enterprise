@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IProduct } from "../entities/product";
+import { UpdateCart } from "../utils/cart.util";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") as string)
@@ -34,9 +35,12 @@ const cartSlice = createSlice({
         (cartItem: IProduct) => cartItem._id === item._id
       );
 
-      if (existingItemIndex === -1)
+      if (existingItemIndex === -1) {
         state.cartItems = [...state.cartItems, item];
-      else state.cartItems[existingItemIndex] = item;
+      } else {
+        state.cartItems[existingItemIndex] = item;
+      }
+      return UpdateCart(state);
     },
   },
 });
