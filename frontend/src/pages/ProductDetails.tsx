@@ -1,5 +1,14 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Row, Col, ListGroupItem, Button, Image, Badge } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  ListGroupItem,
+  Button,
+  Image,
+  Badge,
+} from "react-bootstrap";
 import ProductRating from "../components/ProductRating";
 import { useGetProductDetailsQuery } from "../slices/productSlice";
 import Loader from "../components/Loader";
@@ -12,6 +21,7 @@ function ProductDetails() {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId as string);
+  const [qty, setQty] = useState(1);
 
   // Check that product exists before trying to access its properties
   const stockCount = product?.countInStock ?? 0;
@@ -69,6 +79,26 @@ function ProductDetails() {
                   </Badge>
                 ) : null}
               </ListGroupItem>
+              {stockCount > 0 && (
+                <ListGroupItem>
+                  <Row>
+                    <Col>Qty</Col>
+                    <Col>
+                      <Form.Control
+                        as="select"
+                        value={qty}
+                        onChange={(e) => setQty(Number(e.target.value))}
+                      >
+                        {[...Array(stockCount).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              )}
               <ListGroupItem>
                 <Button
                   className="w-100 mt-auto"
