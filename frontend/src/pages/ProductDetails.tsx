@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Form,
   Row,
@@ -13,6 +13,8 @@ import ProductRating from "../components/ProductRating";
 import { useGetProductDetailsQuery } from "../slices/productSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { addToCart } from "../slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 function ProductDetails() {
   const { id: productId } = useParams();
@@ -22,9 +24,16 @@ function ProductDetails() {
     error,
   } = useGetProductDetailsQuery(productId as string);
   const [qty, setQty] = useState(1);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Check that product exists before trying to access its properties
   const stockCount = product?.countInStock ?? 0;
+
+  function addToCartHandler() {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  }
 
   return (
     <>
@@ -106,6 +115,7 @@ function ProductDetails() {
                   variant="outline-success"
                   type="button"
                   disabled={stockCount < 1}
+                  onClick={addToCartHandler}
                 >
                   Add to Cart
                 </Button>
