@@ -13,7 +13,7 @@ import {
 import { FaTrash } from "react-icons/fa";
 import Message from "../components/Message";
 import { calculateCartDetails } from "../utils/cart.util";
-import { addToCart } from "../slices/cartSlice";
+import { addToCart, removeFromCart } from "../slices/cartSlice";
 
 export default function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -21,9 +21,11 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   function updateCartQuantityHandler(product, qty) {
-    console.log("🚀 ~ updateCartQuantityHandler ~ qty:", qty);
-    console.log("🚀 ~ updateCartQuantityHandler ~ item:", product);
     dispatch(addToCart({ ...product, qty }));
+  }
+
+  function deleteItemFromCartHandler(id) {
+    dispatch(removeFromCart(id));
   }
   return (
     <Row>
@@ -70,7 +72,7 @@ export default function Cart() {
                     <Col md={2} className="align-center">
                       <Button
                         variant="danger"
-                        onClick={() => console.log(item._id)}
+                        onClick={() => deleteItemFromCartHandler(item._id)}
                       >
                         <FaTrash />
                       </Button>
