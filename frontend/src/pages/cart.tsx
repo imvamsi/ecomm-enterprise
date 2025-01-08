@@ -79,6 +79,15 @@ export default function Cart() {
             <ListGroupItem>
               {`Total Price: ${calculateCartDetails(cartItems, "price")}`}
             </ListGroupItem>
+            <ListGroupItem>
+              <Button
+                variant="primary"
+                className="btn-block"
+                style={{ width: "100%" }}
+              >
+                Proceed to Checkout
+              </Button>
+            </ListGroupItem>
           </ListGroup>
         </Card>
       </Col>
