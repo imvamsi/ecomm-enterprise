@@ -30,4 +30,15 @@ export const UpdateCart = (state) => {
   return state;
 };
 
+export const calculateCartDetails = (item, criteria) => {
+  if (criteria === "total")
+    return item.reduce((acc, currentVal) => acc + currentVal.qty, 0);
+  else
+    return item
+      .reduce((acc, currentVal) => acc + currentVal.qty * currentVal.price, 0)
+      .toFixed(2);
+
+  // Make sure you're adding qty from each cart item
+};
+
 //export { UpdateCart };

@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import Message from "../components/Message";
+import { calculateCartDetails } from "../utils/cart.util";
 
 export default function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -65,6 +66,21 @@ export default function Cart() {
               ))}
           </ListGroup>
         )}
+      </Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup>
+            <ListGroupItem>
+              {`Total items in Cart: ${calculateCartDetails(
+                cartItems,
+                "total"
+              )}`}
+            </ListGroupItem>
+            <ListGroupItem>
+              {`Total Price: ${calculateCartDetails(cartItems, "price")}`}
+            </ListGroupItem>
+          </ListGroup>
+        </Card>
       </Col>
     </Row>
   );
