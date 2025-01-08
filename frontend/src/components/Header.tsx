@@ -24,7 +24,8 @@ function Header(): JSX.Element {
                 {cartItems.length > 0 && (
                   <Badge pill bg="success" style={{ marginLeft: "1rem" }}>
                     {cartItems.reduce(
-                      (acc, currentVal) => acc + currentVal.qty
+                      (acc, currentVal) => acc + currentVal.qty,
+                      0
                     )}
                   </Badge>
                 )}
