@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { UseDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
   Col,
@@ -13,9 +13,18 @@ import {
 import { FaTrash } from "react-icons/fa";
 import Message from "../components/Message";
 import { calculateCartDetails } from "../utils/cart.util";
+import { addToCart } from "../slices/cartSlice";
 
 export default function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  function updateCartQuantityHandler(product, qty) {
+    console.log("🚀 ~ updateCartQuantityHandler ~ qty:", qty);
+    console.log("🚀 ~ updateCartQuantityHandler ~ item:", product);
+    dispatch(addToCart({ ...product, qty }));
+  }
   return (
     <Row>
       <Col md={8}>
@@ -44,7 +53,12 @@ export default function Cart() {
                       <Form.Control
                         as="select"
                         value={item.qty}
-                        onChange={(e) => console.log(e)}
+                        onChange={(e) =>
+                          updateCartQuantityHandler(
+                            item,
+                            Number(e.target.value)
+                          )
+                        }
                       >
                         {[...Array(item.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>
@@ -71,13 +85,14 @@ export default function Cart() {
         <Card>
           <ListGroup>
             <ListGroupItem>
-              {`Total items in Cart: ${calculateCartDetails(
-                cartItems,
-                "total"
-              )}`}
-            </ListGroupItem>
-            <ListGroupItem>
-              {`Total Price: ${calculateCartDetails(cartItems, "price")}`}
+              <h2>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </h2>
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
             </ListGroupItem>
             <ListGroupItem>
               <Button
