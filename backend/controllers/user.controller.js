@@ -2,7 +2,20 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/user.model.js";
 
 const authenticateUser = asyncHandler(async (req, res) => {
-  res.send("authenticate user");
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("invalid email/password");
+  }
 });
 
 const registerUsrer = asyncHandler(async (req, res) => {
