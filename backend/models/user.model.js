@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
 // interface IUSer extends mongoose.Document {
 //   name: string;
@@ -26,7 +27,7 @@ const userSchema = new Schema(
     },
     isAdmin: {
       type: Boolean,
-      requireD: true,
+      required: true,
       default: false,
     },
   },
@@ -34,5 +35,9 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 export default mongoose.model("User", userSchema);
