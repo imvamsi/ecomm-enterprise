@@ -2,22 +2,15 @@ import { strict } from "assert";
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/generateToken.js";
 
 const authenticateUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "365d",
-    });
-
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
+    generateToken(res, user._id);
     res.json({
       _id: user._id,
       name: user.name,
@@ -31,11 +24,45 @@ const authenticateUser = asyncHandler(async (req, res) => {
 });
 
 const registerUsrer = asyncHandler(async (req, res) => {
-  res.send("register user");
+  const { name, email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("username/password missing");
+  }
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    res.status(409);
+    throw new Error("user already exists!! Try logging in");
+  }
+
+  //hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+  });
+
+  if (user) {
+    generateToken(res, user._id);
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(500);
+    throw new Error("User creation failed");
+  }
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  res.send("log out user");
+  res.clearCookie("jwt", { path: "/", httpOnly: true, secure: true });
+  res.status(200).json({ message: "Logged out successfully!!" });
 });
 
 const getUsers = asyncHandler(async (req, res) => {
