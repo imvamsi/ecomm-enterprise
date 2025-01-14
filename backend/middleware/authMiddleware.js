@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import asyncHandler from "./asyncHandler";
+import asyncHandler from "./asyncHandler.js";
 import User from "../models/user.model.js";
 
 export const protectedRoute = asyncHandler(async (req, res, next) => {
