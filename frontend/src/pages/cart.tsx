@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -18,6 +18,7 @@ import { IProduct } from "../entities/product";
 
 export default function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
   const data = useSelector((state) => console.log(state, "state"));
   const dispatch = useDispatch();
 
@@ -32,6 +33,9 @@ export default function Cart() {
   const cartTotalItems = calculateCartTotal(cartItems, "totalQuantity"); // Use 'totalQuantity' as criteria
   const cartTotalPrice = calculateCartTotal(cartItems, "totalPrice"); // Use 'totalPrice' as criteria
 
+  const checkoutHandler = () => {
+    navigate("/login?redirect=/shipping");
+  };
   return (
     <Row>
       <Col md={8} sm={12}>
@@ -96,7 +100,7 @@ export default function Cart() {
                 className="btn-block"
                 style={{ width: "100%" }}
                 disabled={cartItems.length === 0}
-                onClick={() => {}}
+                onClick={checkoutHandler}
               >
                 Proceed to Checkout
               </Button>
