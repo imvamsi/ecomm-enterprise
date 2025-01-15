@@ -1,7 +1,5 @@
-import { strict } from "assert";
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 
@@ -129,7 +127,33 @@ const getUserById = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  res.send("update user");
+  const { id } = req.params;
+  const { name, email, isAdmin } = req.body;
+
+  const user = await User.findById(id).select("-password");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("user not found....");
+  }
+
+  // Check if the current user is an admin and if they are trying to change another admin's status
+  if (req.user.isAdmin && isAdmin !== undefined && req.user._id !== id) {
+    // Prevent an admin from demoting another admin
+    if (isAdmin === false && user.isAdmin === true) {
+      res.status(403);
+      throw new Error("You cannot remove admin rights from another admin");
+    }
+  }
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.isAdmin =
+    req.body.isAdmin !== undefined ? Boolean(req.body.isAdmin) : user.isAdmin;
+
+  const updatedUser = await user.save();
+  console.log(updatedUser);
+  res.json(updatedUser);
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
