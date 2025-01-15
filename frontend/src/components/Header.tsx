@@ -31,7 +31,7 @@ function Header(): JSX.Element {
                 )}
               </Nav.Link>
 
-              <Nav.Link className="text-white" as={Link} to="/sign-in">
+              <Nav.Link className="text-white" as={Link} to="/login">
                 <FaUser /> Sign In
               </Nav.Link>
             </Nav>
