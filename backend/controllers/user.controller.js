@@ -157,7 +157,19 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  res.send("delete user");
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    throw new Error("no user exist");
+  }
+
+  if (user.isAdmin) {
+    throw new Error("cannot delete admin user");
+  }
+
+  if (user) {
+    await User.deleteOne({ _id: user._id });
+    res.json("user deleted successfully");
+  }
 });
 
 export {
