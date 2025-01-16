@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, UseDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import Loader from "../components/Loader";
 import { useLoginMutation } from "../slices/usersSlice";
@@ -17,7 +17,6 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state: RootState) => state.login);
-  //console.log("🚀 ~ Login ~ state:", state);
   const [login, { isLoading }] = useLoginMutation();
 
   const { search } = useLocation();
@@ -38,7 +37,6 @@ function Login() {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
-      console.log("🚀 ~ Login ~ err:", err);
       toast.error(err?.data?.message);
     }
   };
@@ -46,7 +44,6 @@ function Login() {
   return (
     <FormContainer>
       <h1>Login</h1>
-      {/* <ToastContainer /> */}
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-4">
           <Form.Label>Email</Form.Label>
@@ -67,10 +64,24 @@ function Login() {
           />
         </Form.Group>
 
-        <Button type="submit" variant="primary" style={{ width: "100%" }}>
+        <Button
+          disabled={isLoading}
+          type="submit"
+          variant="primary"
+          style={{ width: "100%" }}
+        >
           Sign In
         </Button>
+        {isLoading && <Loader />}
       </Form>
+      <Row className="py-3">
+        <Col>
+          New Customer?{" "}
+          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+            Register
+          </Link>
+        </Col>
+      </Row>
     </FormContainer>
   );
 }
