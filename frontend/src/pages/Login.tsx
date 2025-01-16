@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, UseDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import Loader from "../components/Loader";
 import { useLoginMutation } from "../slices/usersSlice";
@@ -16,14 +16,15 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { userInfo } = useSelector((state: RootState) => state.login);
+  //console.log("🚀 ~ Login ~ state:", state);
   const [login, { isLoading }] = useLoginMutation();
 
   const { search } = useLocation();
   const redirect = getQueryParams("redirect", search);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo !== null) {
       navigate(redirect);
     }
   }, [redirect, userInfo, navigate]);
@@ -37,13 +38,14 @@ function Login() {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      toast.error(err.data);
     }
   };
 
   return (
     <FormContainer>
       <h1>Login</h1>
+      <ToastContainer />
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-4">
           <Form.Label>Email</Form.Label>
