@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../utils/generateToken.js";
+import generateToken from "../utils/generateToken.js";
 
 const authenticateUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -59,7 +59,10 @@ const registerUsrer = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  res.clearCookie("jwt", { path: "/", httpOnly: true, secure: true });
+  //res.clearCookie("jwt", { path: "/", httpOnly: true, secure: true });
+  res.clearCookie("jwt", {
+    path: "/",
+  });
   res.status(200).json({ message: "Logged out successfully!!" });
 });
 
