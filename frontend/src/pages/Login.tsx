@@ -38,14 +38,15 @@ function Login() {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
-      toast.error(err.data);
+      console.log("🚀 ~ Login ~ err:", err);
+      toast.error(err?.data?.message);
     }
   };
 
   return (
     <FormContainer>
       <h1>Login</h1>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-4">
           <Form.Label>Email</Form.Label>
