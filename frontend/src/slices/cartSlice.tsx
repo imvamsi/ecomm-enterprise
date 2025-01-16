@@ -11,20 +11,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      // const item = action.payload;
-
-      // const existingItem = state.cartItems.find(
-      //   (cartItem) => cartItem._id === item._id
-      // );
-
-      // if (existingItem) {
-      //   state.cartItems = state.cartItems.map((cartItem) =>
-      //     cartItem._id === existingItem._id ? item : cartItem
-      //   );
-      // } else {
-      //   state.cartItems = [...state.cartItem, item];
-      // }
-
       const item = action.payload;
 
       if (!item) {
@@ -48,9 +34,10 @@ const cartSlice = createSlice({
       );
       return UpdateCart(state);
     },
+    resetCart: (state) => (state = initialState),
   },
 });
 //export as an action
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
