@@ -35,9 +35,14 @@ const cartSlice = createSlice({
       return UpdateCart(state);
     },
     resetCart: (state) => (state = initialState),
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      return UpdateCart(state);
+    },
   },
 });
 //export as an action
-export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, resetCart, saveShippingAddress } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
