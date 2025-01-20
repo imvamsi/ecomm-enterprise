@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,15 @@ import FormContainer from "../components/FormContainer";
 import { saveShippingAddress } from "../slices/cartSlice";
 
 export default function Shipping() {
-  const cart = useSelector((state) => state.cart);
-  console.log("🚀 ~ Shipping ~ data:", cart);
-  const [address, setAddress] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [postalCode, setPostalCode] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
+  const cart = useSelector((state) => state?.cart);
+  const { shippingAddress } = cart;
+
+  const [address, setAddress] = useState<string>(shippingAddress?.address);
+  const [city, setCity] = useState<string>(shippingAddress?.city);
+  const [postalCode, setPostalCode] = useState<string>(
+    shippingAddress?.postalCode
+  );
+  const [country, setCountry] = useState<string>(shippingAddress?.country);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
