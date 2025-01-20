@@ -1,7 +1,8 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Isteps } from "../entities/cart";
 
-export default function Stepper({ step1, step2, step3, step4 }) {
+export default function Stepper({ step1, step2, step3, step4 }: Isteps) {
   return (
     <Nav className="mb-4 justify-content-center">
       <Nav.Item>

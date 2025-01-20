@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Shipping from "../pages/Shipping";
 import PrivateRoute from "../components/PrivateRoute";
+import Payment from "../pages/Payment";
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/shipping" element={<Shipping />} />
+        <Route path="/payment" element={<Payment />} />
       </Route>
     </Routes>
   );
