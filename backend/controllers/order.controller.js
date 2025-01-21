@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import ProductModel from "../models/product.model.js";
 import {calcPrices} from "../utils/calcPrice.js";
 import OrderModel from "../models/order.model.js";
+import ProductModel from "../models/product.model.js";
 
 
 const createOrder = asyncHandler(async (req, res) => {
@@ -20,7 +20,10 @@ const createOrder = asyncHandler(async (req, res) => {
     });
 
     //map over order items and get the price from the db and restructure the order object
-
+    /**
+     * @typedef {Object} matchingItem
+     * @property {number} price
+     */
     const dbOrderItems = orderItems.map(itemFromClient => {
         const matchingItem = itemsFromDb.find(x => x._id === itemFromClient._id)
         return {
@@ -54,8 +57,15 @@ const createOrder = asyncHandler(async (req, res) => {
 
 });
 
+
 const getCurrentUserOrders = asyncHandler(async (req, res) => {
-    res.send("get current order of user");
+    const orders = await OrderModel.find({user: req.user._id})
+    if (!orders || orders.length === 0) {
+        res.status(404)
+        throw new Error('order not found')
+    } else {
+        res.status(200).json(orders)
+    }
 });
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
