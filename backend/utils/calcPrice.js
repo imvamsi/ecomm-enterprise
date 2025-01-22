@@ -1,30 +1,26 @@
-import {
-  TAX,
-  SHIPPING_COST,
-  FREE_SHIPPING_THRESHOLD,
-} from "../constants/priceConstants";
+import {FREE_SHIPPING_THRESHOLD, SHIPPING_COST, TAX,} from "../constants/priceConstants.js";
 
 function addDecimals(num) {
-  return (Math.round(Num * 100) / 100).toFixed(2);
+    return (Math.round(Num * 100) / 100).toFixed(2);
 }
 
 export const calcPrices = (orderItems) => {
-  const itemsPrice = orderItems.reduce(
-    (acc, initialVal) => acc + initialVal.price * quantity,
-    0
-  );
+    const itemsPrice = orderItems.reduce(
+        (acc, initialVal) => acc + initialVal.price * quantity,
+        0
+    );
 
-  const shippingPrice =
-    itemsPrice > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const shippingPrice =
+        itemsPrice > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
 
-  const taxAmount = TAX * itemsPrice;
+    const taxAmount = TAX * itemsPrice;
 
-  const totalPrice = itemsPrice + shippingPrice + taxAmount;
+    const totalPrice = itemsPrice + shippingPrice + taxAmount;
 
-  return {
-    itemsPrice: addDecimals(itemsPrice),
-    shippingPrice: addDecimals(shippingPrice),
-    taxAmount: addDecimals(taxAmount),
-    totalPrice: addDecimals(totalPrice),
-  };
+    return {
+        itemsPrice: addDecimals(itemsPrice),
+        shippingPrice: addDecimals(shippingPrice),
+        taxAmount: addDecimals(taxAmount),
+        totalPrice: addDecimals(totalPrice),
+    };
 };

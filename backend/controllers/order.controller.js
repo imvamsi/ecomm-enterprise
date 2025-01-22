@@ -4,6 +4,13 @@ import OrderModel from "../models/order.model.js";
 import ProductModel from "../models/product.model.js";
 
 
+/*
+creates the order item:
+1. get the order items
+2. get the product ids from db that match the existing order items
+3. once you have the product ids, loop over the existing items, 
+ */
+
 const createOrder = asyncHandler(async (req, res) => {
     const {
         orderItems,
