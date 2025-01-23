@@ -27,3 +27,10 @@ interface CartItem {
   updatedAt: string;
   qty: number;
 }
+
+export interface Isteps {
+  step1?: boolean;
+  step2?: boolean;
+  step3?: boolean;
+  step4?: boolean;
+}
